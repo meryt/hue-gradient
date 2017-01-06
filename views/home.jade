@@ -22,8 +22,13 @@ block content
             h3 Test Light
             p Press the button to test the light
             form
-              select(id='lights', name='lights')
-              a.btn.btn-default(href='#',id='test-light', role='button') Test
+              .form-group
+                label(for='lights') Select Light
+                select.form-control(id='lights', name='lights')
+                  option Loading...
+
+              .form.group
+                a.btn.btn-default(href='#',id='test-light', role='button') Test
       .col-sm-4
         .panel
           .panel-body

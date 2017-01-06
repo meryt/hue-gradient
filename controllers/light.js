@@ -27,8 +27,10 @@ exports.light = function(req, res) {
 
     client.lights.getById(lightId)
         .then(light => {
+            var randomHue = Math.floor(Math.random() * (65535 + 1));
+
             light.brightness = 254;
-            light.hue        = 32554;
+            light.hue        = randomHue;
             light.saturation = 254;
 
             return client.lights.save(light);
