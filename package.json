@@ -1,12 +1,14 @@
 {
-  "name": "dawn-silence",
+  "name": "hue-gradient",
   "version": "1.0.0",
-  "description": "My app description",
+  "private": true,
+  "description": "Calculate colours along gradient to apply to Hue lights",
   "scripts": {
     "build": "npm-run-all build:*",
     "build:css": "node-sass public/css/main.scss > public/css/main.css",
+    "init-env": "node bin/init-env.js",
     "postinstall": "npm run build",
-    "start": "node server.js",
+    "start": "DEBUG=hue-gradient node server.js",
     "test": "mocha",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "nodemon -e scss -w public/css -x npm run build:css"
@@ -19,6 +21,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.2.1",
     "express-validator": "^2.20.4",
+    "huejay": "^1.5.0",
     "jade": "^1.11.0",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",

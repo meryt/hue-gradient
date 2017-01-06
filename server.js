@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -14,7 +16,6 @@ dotenv.load();
 
 // Controllers
 var HomeController = require('./controllers/home');
-var contactController = require('./controllers/contact');
 
 var app = express();
 
@@ -32,8 +33,6 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
-app.get('/contact', contactController.contactGet);
-app.post('/contact', contactController.contactPost);
 
 // Production error handler
 if (app.get('env') === 'production') {
@@ -42,6 +41,31 @@ if (app.get('env') === 'production') {
     res.sendStatus(err.status || 500);
   });
 }
+
+app.set('huejay', new (require('huejay')).Client({
+  host: process.env.HUE_BRIDGE_HOST,
+  username: process.env.HUE_API_USERNAME
+}));
+
+app.get('huejay').bridge.ping()
+    .then(() => {
+        console.log('Established connection to Hue Bridge at ' + process.env.HUE_BRIDGE_HOST + '.');
+    })
+    .catch(error => {
+        console.error('Could not reach Hue Bridge at ' + process.env.HUE_BRIDGE_HOST + ": " + error);
+        process.exit(1);
+    })
+    .then(() => {
+        app.get('huejay').bridge.isAuthenticated()
+        .then(() => {
+            console.log('Hue Bridge authentication successful.');
+        })
+        .catch(error => {
+            console.error('Failed to authenticate with Hue Bridge using username ' + process.env.HUE_API_USERNAME +
+                    ': ' + error);
+            process.exit(2);
+        })
+    });
 
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
