@@ -15,4 +15,10 @@ to learn how to obtain these values.
 npm start
 ```
 
+This will start the server on port 3000. You can change the port by adding `PORT` to
+your .env file and setting a different value.
+
+When the server starts up, it also attempts to connect to the Hue Bridge defined in
+.env, and if it fails to connect or fails to authenticate, the server process will
+exit.
 
