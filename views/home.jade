@@ -20,7 +20,7 @@ block content
         .panel
           .panel-body
             h3 Test Light
-            p Press the button to test the light
+            p Press the button to set the light to a random hue.
             form
               .form-group
                 label(for='lights') Select Light
@@ -32,9 +32,18 @@ block content
       .col-sm-4
         .panel
           .panel-body
-            h3 Heading
-            p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-            a.btn.btn-default(href='#', role='button') View details
+            h3 Set Colour
+            p Use this form to set the light to a specific colour.
+            form
+              .form-group
+                label(for='lights-set') Select Light
+                select.form-control(id='lights-set', name='lights-set')
+                  option Loading...
+              .form-group
+                label(for='colour-set') Colour
+                input.form-control(id='colour-set', name='colour-set', type='color', value='#FF0000')
+              .form.group
+                a.btn.btn-default(href='#',id='set-light', role='button') Set
       .col-sm-4
         .panel
           .panel-body

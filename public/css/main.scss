@@ -250,3 +250,7 @@ textarea {
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+input.form-control[type="color"] {
+  height: 4em;
+}
