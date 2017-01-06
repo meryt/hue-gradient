@@ -64,7 +64,7 @@ exports.lightSet = function(req, res) {
     // Convert from an rgb string like #FF0000 to a color object
     var color = Color(req.body.color);
 
-    setLightToColor(lightId, color, req, res);
+    setLightToColor(lightId, color, res);
 };
 
 /**
@@ -80,13 +80,34 @@ exports.gradient = function(req, res) {
 
     var newColor = interpolate(colorStart, colorEnd, value/100.0);
 
-    setLightToColor(lightId, newColor, req, res);
+    setLightToColor(lightId, newColor, res);
 };
 
-function setLightToColor(lightId, color, req, res) {
+exports.testGradient = function(req, res) {
+    var lightId = req.body.light;
+
+    var colorStart = Color(req.body.color1);
+    var colorEnd = Color(req.body.color2);
+
+    var i = 0;
+    function doGradient() {
+        // update color using i
+        setLightToColor(lightId, interpolate(colorStart, colorEnd, i/100.0));
+        i += 5;
+        if (i <= 100) {
+            setTimeout(doGradient, 2 * 1000);
+        } else {
+            console.log('Done iterating gradient');
+        }
+    }
+    doGradient();
+
+    res.json({"message": 'Started iteration'});
+};
+
+function setLightToColor(lightId, color, res) {
     client.lights.getById(lightId)
         .then(light => {
-            //light.brightness = normalizeLightness(color.lightness());
             light.brightness = 255;
             light.hue        = normalizeHue(color.hue());
             light.saturation = normalizeSaturation(color.saturation());
@@ -94,11 +115,15 @@ function setLightToColor(lightId, color, req, res) {
             return client.lights.save(light);
         })
         .then(light => {
-            res.json({"message" : `Updated light [${light.id}]`});
+            if (res) {
+                res.json({"message": `Updated light [${light.id}]`});
+            }
         })
         .catch(error => {
             console.log(error.stack);
-            res.json({"error": error.message});
+            if (res) {
+                res.json({"error": error.message});
+            }
         });
 }
 

@@ -48,4 +48,18 @@ $(function() {
             });
     });
 
+    // Click handler for test-gradient button
+    $("#test-gradient").click(function() {
+        $.post("/test-gradient", {
+                "light": $("#lights").val(),
+                "color1": $("#colour-one").val(),
+                "color2": $("#colour-two").val()
+            },
+            function(data) {
+                if (data.error) {
+                    alert(data.error);
+                }
+            });
+    });
+
 });
