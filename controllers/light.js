@@ -95,7 +95,7 @@ exports.testGradient = function(req, res) {
         setLightToColor(lightId, interpolate(colorStart, colorEnd, i/100.0));
         i += 5;
         if (i <= 100) {
-            setTimeout(doGradient, 2 * 1000);
+            setTimeout(doGradient, 1 * 1000);
         } else {
             console.log('Done iterating gradient');
         }
