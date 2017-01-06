@@ -63,11 +63,31 @@ exports.lightSet = function(req, res) {
 
     // Convert from an rgb string like #FF0000 to a color object
     var color = Color(req.body.color);
-    console.log('Setting colour to H' + color.hue() + " S" + color.saturation() + " L" + color.lightness());
 
+    setLightToColor(lightId, color, req, res);
+};
+
+/**
+ * POST /light-gradient set a light to a colour along a gradient
+ */
+exports.gradient = function(req, res) {
+    var lightId = req.body.light;
+
+    var colorStart = Color(req.body.color1);
+    var colorEnd = Color(req.body.color2);
+
+    var value = req.body.value;
+
+    var newColor = interpolate(colorStart, colorEnd, value/100.0);
+
+    setLightToColor(lightId, newColor, req, res);
+};
+
+function setLightToColor(lightId, color, req, res) {
     client.lights.getById(lightId)
         .then(light => {
-            light.brightness = normalizeLightness(color.lightness());
+            //light.brightness = normalizeLightness(color.lightness());
+            light.brightness = 255;
             light.hue        = normalizeHue(color.hue());
             light.saturation = normalizeSaturation(color.saturation());
 
@@ -80,7 +100,7 @@ exports.lightSet = function(req, res) {
             console.log(error.stack);
             res.json({"error": error.message});
         });
-};
+}
 
 function normalize(fraction, max) {
     return Math.round(fraction * max);
@@ -100,4 +120,12 @@ function normalizeSaturation(fraction) {
 
 function philipsHueToCssHue(philipsHue) {
     return philipsHue / MAX_PHILIPS_HUE;
+}
+
+function interpolate(color1, color2, distance) {
+    var red = color1.red() + distance * (color2.red() - color1.red());
+    var green = color1.green() + distance * (color2.green() - color1.green());
+    var blue = color1.blue() + distance * (color2.blue() - color1.blue());
+
+    return new Color.RGB(red, green, blue);
 }

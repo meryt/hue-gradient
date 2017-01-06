@@ -4,9 +4,11 @@ $(function() {
     $.get("/lights", function(data) {
         $("#lights").find('option').remove();
         $("#lights-set").find('option').remove();
+        $("#lights-gradient").find('option').remove();
         for (var i in data) {
             $("#lights").append(new Option(data[i].name, data[i].id));
             $("#lights-set").append(new Option(data[i].name, data[i].id));
+            $("#lights-gradient").append(new Option(data[i].name, data[i].id));
         }
     });
 
@@ -29,6 +31,21 @@ $(function() {
                 alert(data.error);
             }
         });
+    });
+
+    // Click handler for gradient button
+    $("#set-gradient").click(function() {
+        $.post("/light-gradient", {
+                "light": $("#lights-gradient").val(),
+                "color1": $("#colour-one").val(),
+                "color2": $("#colour-two").val(),
+                "value": $("#value").val()
+            },
+            function(data) {
+                if (data.error) {
+                    alert(data.error);
+                }
+            });
     });
 
 });

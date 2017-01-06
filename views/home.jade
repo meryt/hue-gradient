@@ -47,6 +47,22 @@ block content
       .col-sm-4
         .panel
           .panel-body
-            h3 Heading
-            p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-            a.btn.btn-default(href='#', role='button') View details
+            h3 Colour Gradient
+            p Set a colour along a gradient.
+            form
+              .form-group
+                label(for='lights-gradient') Select Light
+                select.form-control(id='lights-gradient', name='lights-gradient')
+                  option Loading...
+              .form-group
+                label(for='colour-one') Colour One
+                input.form-control(id='colour-one', name='colour-one', type='color', value='#FF0000')
+              .form-group
+                label(for='colour-two') Colour Two
+                input.form-control(id='colour-two', name='colour-two', type='color', value='#FFFF00')
+              .form-group
+                label(for='colour-two') Value (between 0 and 100)
+                input.form-control(id='value', name='value', type='number', value='1')
+
+              .form.group
+                a.btn.btn-default(href='#',id='set-gradient', role='button') Set

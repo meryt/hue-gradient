@@ -37,6 +37,7 @@ app.get('/', HomeController.index);
 app.get('/lights', LightController.lights);
 app.post('/light', LightController.light);
 app.post('/light-set', LightController.lightSet);
+app.post('/light-gradient', LightController.gradient);
 
 // Production error handler
 if (app.get('env') === 'production') {
