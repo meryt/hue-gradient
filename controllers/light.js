@@ -36,6 +36,7 @@ exports.light = function(req, res) {
 
     client.lights.getById(lightId)
         .then(light => {
+            light.on         = true;
             light.brightness = 255;
             light.hue        = randomHue;
             light.saturation = 255;
