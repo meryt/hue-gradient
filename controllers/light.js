@@ -56,6 +56,32 @@ exports.light = function(req, res) {
 };
 
 /**
+ * POST /light update a light to a random bright color
+ */
+exports.off = function(req, res) {
+
+    var lightId = req.body.light;
+    var transitionTime = req.body.transitionTime;
+
+    client.lights.getById(lightId)
+        .then(light => {
+            light.on             = false;
+            light.transitionTime = transitionTime;
+
+            return client.lights.save(light);
+        })
+        .then(light => {
+            var message = `Turning off light [${light.id}] over ` + transitionTime + " seconds.";
+            console.log(message);
+            res.json({"message" : message});
+        })
+        .catch(error => {
+            console.log(error.stack);
+            res.json({"error": error.message});
+        });
+};
+
+/**
  * POST /light-set update a light to a specific colour
  */
 exports.lightSet = function(req, res) {

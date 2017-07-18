@@ -19,7 +19,7 @@ block content
       .col-sm-4
         .panel
           .panel-body
-            h3 Test Light
+            h3 Random Colour
             p Press the button to set the light to a random hue.
             form
               .form-group
@@ -27,8 +27,10 @@ block content
                 select.form-control(id='lights', name='lights')
                   option Loading...
 
-              .form.group
-                a.btn.btn-default(href='#',id='test-light', role='button') Test
+              .form-group
+                a.btn.btn-default(href='#',id='test-light', role='button') Randomize
+                a.btn.btn-default(href='#',id='off-light', role='button') Turn Off
+                a.btn.btn-default(href='#',id='fade-light', role='button') Fade Off
 
           .panel-body
             h3 Gradient Demo
@@ -49,7 +51,7 @@ block content
               .form-group
                 label(for='colour-set') Colour
                 input.form-control(id='colour-set', name='colour-set', type='color', value='#FF0000')
-              .form.group
+              .form-group
                 a.btn.btn-default(href='#',id='set-light', role='button') Set
       .col-sm-4
         .panel
@@ -71,5 +73,5 @@ block content
                 label(for='colour-two') Value (between 0 and 100)
                 input.form-control(id='value', name='value', type='number', value='1')
 
-              .form.group
+              .form-group
                 a.btn.btn-default(href='#',id='set-gradient', role='button') Set

@@ -24,6 +24,24 @@ $(function() {
         });
     });
 
+    // Click handler for off button
+    $("#off-light").click(function() {
+        $.post("/off", {"light": $("#lights").val(), "transitionTime": 2}, function(data) {
+            if (data.error) {
+                alert(data.error);
+            }
+        });
+    });
+
+    // Click handler for off button
+    $("#fade-light").click(function() {
+        $.post("/off", {"light": $("#lights").val(), "transitionTime": 60*30}, function(data) {
+            if (data.error) {
+                alert(data.error);
+            }
+        });
+    });
+
     // Click handler for set button
     $("#set-light").click(function() {
         $.post("/light-set", {"light": $("#lights-set").val(), "color": $("#colour-set").val()}, function(data) {

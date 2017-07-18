@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', HomeController.index);
 app.get('/lights', LightController.lights);
 app.post('/light', LightController.light);
+app.post('/off', LightController.off);
 app.post('/light-set', LightController.lightSet);
 app.post('/light-gradient', LightController.gradient);
 app.post('/test-gradient', LightController.testGradient);
