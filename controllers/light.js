@@ -37,7 +37,7 @@ exports.light = function(req, res) {
     client.lights.getById(lightId)
         .then(light => {
             light.on         = true;
-            light.brightness = 255;
+            //light.brightness = 255;
             light.hue        = randomHue;
             light.saturation = 255;
 
@@ -48,6 +48,32 @@ exports.light = function(req, res) {
             var message = `Updated light [${light.id}] to ` + hex;
             console.log(message);
             res.json({"message" : message, "hex": hex});
+        })
+        .catch(error => {
+            console.log(error.stack);
+            res.json({"error": error.message});
+        });
+};
+
+/**
+ * POST /light update a light to a random bright color
+ */
+exports.on = function(req, res) {
+
+    var lightId = req.body.light;
+    var transitionTime = req.body.transitionTime;
+
+    client.lights.getById(lightId)
+        .then(light => {
+            light.on             = true;
+            light.transitionTime = transitionTime;
+
+            return client.lights.save(light);
+        })
+        .then(light => {
+            var message = `Turning on light [${light.id}] over ` + transitionTime + " seconds.";
+            console.log(message);
+            res.json({"message" : message});
         })
         .catch(error => {
             console.log(error.stack);

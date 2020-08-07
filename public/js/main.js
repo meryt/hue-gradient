@@ -24,6 +24,15 @@ $(function() {
         });
     });
 
+    // Click handler for on button
+    $("#on-light").click(function() {
+        $.post("/on", {"light": $("#lights").val(), "transitionTime": 2}, function(data) {
+            if (data.error) {
+                alert(data.error);
+            }
+        });
+    });
+
     // Click handler for off button
     $("#off-light").click(function() {
         $.post("/off", {"light": $("#lights").val(), "transitionTime": 2}, function(data) {
