@@ -25,7 +25,7 @@
     "jade": "^1.11.0",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",
-    "node-sass": "^3.6.0",
+    "node-sass": "^4.14.1",
     "nodemailer": "^2.3.0",
     "nodemon": "^1.9.1",
     "npm-run-all": "^1.8.0",
